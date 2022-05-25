@@ -1,0 +1,101 @@
+MODELO FÍSICO PROJETO INTEGRADOR
+
+create table Usuario(
+idUsuario integer(5) primary key AUTO_INCREMENT,
+nome varchar(40) not null,
+email varchar(255) not null,
+senha varchar(15)) not null;
+
+create table Administrador(
+email varchar(255) primary key,
+idUsuario integer(5) not null unique AUTO_INCREMENT, 
+foreign key (idUsuario) references Usuario(idUsuario) ON UPDATE CASCADE ON DELETE SET NULL);
+
+create table Conquista(
+nome varchar (40) not null,
+tipo varchar(40) not null,
+textoConquista varchar(1000) not null,
+idConquista integer(5) primary key AUTO_INCREMENT);
+
+create table Desafio(
+nome varchar (40) not null,
+nivel integer(5) not null,
+textoDesafio varchar(1000) not null ,
+idDesafio integer(5) primary key AUTO_INCREMENT);
+
+create table Ranking(
+tipoRank varchar(40) not null ,
+idRank integer(5) primary key AUTO_INCREMENT );
+
+create table Quiz(nomeQuiz varchar(40) not null,
+pergunta varchar(1000) not null ,alternativaA varchar(1000),alternativaB varchar(1000),
+alternativaC varchar(1000),alternativaD varchar(1000,alternativaE varchar(1000)
+idQuiz integer (5) primary key AUTO_INCREMENT);
+
+
+create table Fase (
+idFase integer(5) primary key AUTO_INCREMENT,nivelFase integer(5) not null,idQuiz integer(5)not null);
+
+create table Obstaculo(
+tipo varchar(100) not null,
+linkPNG varchar(100) not null,
+idObstaculo integer(5) primary key AUTO_INCREMENT,
+idFase integer(5) not null );
+
+create table Usuario_Realiza_Desafio(
+idUsuario integer (5) ,
+idDesafio integer(5));
+ 
+create table Usuario_Completa_Conquista(
+idUsuario integer(5) not null,
+idConquista integer (5) not null);
+
+alter table Obstaculo
+add constraint fk_obs00
+foreign key (idFase)
+references Fase(idFase)
+ON UPDATE CASCADE ON DELETE SET NULL;
+
+alter table Alternativa
+add constraint fk_alternativa
+foreign key (idPergunta)
+references  Pergunta(idPergunta)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+alter table Usuario_Realiza_Desafio
+add constraint fk_urd00
+foreign key (idUsuario)
+references Usuario(idUsuario)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+alter table Usuario_Realiza_Desafio
+add constraint fk_urd01
+foreign key (idDesafio)
+references Desafio(idDesafio)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+alter table Usuario_Completa_Conquista
+add constraint fk_ucc00
+foreign key(idUsuario)
+references Usuario(idUsuario)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+alter table Usuario_Completa_Conquista
+add constraint fk_ucc01
+foreign key(idConquista)
+references Conquista(idConquista)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+alter table Fase
+add constraint fk_fase
+foreign key (idQuiz)
+references Quiz(idQuiz)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+
+
+
+
+
+
+
